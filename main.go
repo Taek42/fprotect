@@ -13,12 +13,12 @@ const (
 )
 
 var (
-	pubKeyLocation string
+	keyVerifierLocation string
 )
 
 func help() {
 	fmt.Println("check README at github.com/Taek42/fprotect")
-fmt.Println("fprotect is a utility to encrypt and decrypt files on\ndisk, printing the file to stdout after decryption.\n")
+	fmt.Println("fprotect is a utility to encrypt and decrypt files on\ndisk, printing the file to stdout after decryption.\n")
 	usage()
 }
 
@@ -51,14 +51,14 @@ func main() {
 	}
 
 	// Identify the pubkey location.
-	pubKeyLocation = os.Getenv("FPROTECTPUBKEY")
-	if pubKeyLocation == "" {
+	keyVerifierLocation = os.Getenv("FPROTECTVERIFIER")
+	if keyVerifierLocation == "" {
 		homeDir, err := homedir.Dir()
 		if err != nil {
-			fmt.Println("unable to access homedir for the fprotect pubkey, consider setting environment variable FPROTECTPUBKEY:", err)
+			fmt.Println("unable to access homedir for the fprotect pubkey, consider setting environment variable FPROTECTVERIFIER:", err)
 			return
 		}
-		pubKeyLocation = filepath.Join(homeDir, ".config", "fprotect.pubkey")
+		keyVerifierLocation = filepath.Join(homeDir, ".config", "fprotect.pubkey")
 	}
 
 	if os.Args[1] == "encrypt" {
